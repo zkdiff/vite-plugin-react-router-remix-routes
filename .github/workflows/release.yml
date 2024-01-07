@@ -1,0 +1,60 @@
+name: release
+
+on: [push, pull_request]
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    release:
+        name: 🚀 Release
+
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+            id-token: write
+
+        if: ${{ github.repository == 'zkdiff/vite-plugin-react-router-remix-routes' && contains('refs/heads/main,refs/heads/beta,refs/heads/next,refs/heads/alpha',github.ref) && github.event_name == 'push' }}
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            - name: Install dependencies
+              uses: bahmutov/npm-install@v1
+              with:
+                  useLockFile: false
+
+            - name: Build
+              run: npm run build
+
+            - name: Release
+              uses: cycjimmy/semantic-release-action@v4
+              with:
+                  semantic_version: 17
+                  branches: |
+                      [
+                        '+([0-9])?(.{+([0-9]),x}).x',
+                        'main',
+                        'next',
+                        'next-major',
+                        {name: 'beta', prerelease: true},
+                        {name: 'alpha', prerelease: true}
+                      ]
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

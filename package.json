@@ -1,0 +1,43 @@
+{
+  "name": "vite-plugin-react-router-remix-routes",
+  "version": "0.0.0-semantically-released",
+  "description": "Vite plugin to generate Remix-style routes for React Router",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zkdiff/vite-plugin-react-router-remix-routes"
+  },
+  "bugs": {
+    "url": "https://github.com/zkdiff/vite-plugin-react-router-remix-routes/issues"
+  },
+  "homepage": "https://github.com/zkdiff/vite-plugin-react-router-remix-routes#readme",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "prettier": "^3.1.1",
+    "semantic-release": "^22.0.12",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0"
+  },
+  "keywords": [],
+  "author": "zkdiff",
+  "license": "MIT"
+}
